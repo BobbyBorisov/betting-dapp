@@ -11,6 +11,31 @@
         <p>Owner address: <strong>{{ owner }} ETH</strong></p>
       </template>
 
+      <template>
+        <div class=”casino”>
+          <h1>Welcome to the Casino</h1>
+          <h4>Please pick a number between 1 and 10</h4>
+          Amount to bet: <input type='number' :value.number='betAmount' @input='updateBetAmount' placeholder="0 Ether">
+          <ul>
+            <li v-on:click="betHandler">1</li>
+            <li v-on:click="betHandler">2</li>
+            <li v-on:click="betHandler">3</li>
+            <li v-on:click="betHandler">4</li>
+            <li v-on:click="betHandler">5</li>
+            <li v-on:click="betHandler">6</li>
+            <li v-on:click="betHandler">7</li>
+            <li v-on:click="betHandler">8</li>
+            <li v-on:click="betHandler">9</li>
+            <li v-on:click="betHandler">10</li>
+          </ul>
+          <img v-if="betSpinnerPendingStatus" id="loader" src="https://loading.io/spinners/double-ring/lg.double-ring-spinner.gif">
+          <!--<div class="event" v-if="winEvent">-->
+            <!--Won: {{ winEvent._status }}-->
+            <!--Amount: {{ winEvent._amount }} Wei-->
+          <!--</div>-->
+        </div>
+      </template>
+
     </section>
   </div>
 </template>
@@ -28,11 +53,20 @@ export default {
     ...mapGetters({
       account: 'account',
       balance: 'balance',
-
+      betAmount: 'betAmount',
       owner: 'owner',
+      betSpinnerPendingStatus: 'betSpinnerPendingStatus'
     }),
   },
   methods: {
+      updateBetAmount(e) {
+          this.$store.commit(types.UPDATE_BET_AMOUNT, e.target.value ? parseInt(e.target.value, 10) : '');
+      },
+      betHandler() {
+          if (this.betAmount) {
+              this.$store.dispatch('bet');
+          }
+      },
   },
 };
 </script>

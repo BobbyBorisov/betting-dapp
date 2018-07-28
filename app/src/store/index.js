@@ -13,6 +13,8 @@ const debug = process.env.NODE_ENV !== 'production';
 const rootState = {
   account: '',
   balance: '',
+  betAmount: '',
+  betSpinnerPendingStatus: false,
 
   owner: '',
 };
@@ -79,6 +81,14 @@ const mutations = {
   [types.SET_OWNER](state, owner) {
     state.owner = owner;
   },
+
+  [types.UPDATE_BET_AMOUNT](state, betAmount) {
+    state.betAmount = betAmount;
+  },
+
+  [types.UPDATE_BET_SPINNER_STATUS](state, status) {
+      state.betSpinnerPendingStatus = status;
+  }
 };
 
 export default new Vuex.Store({
